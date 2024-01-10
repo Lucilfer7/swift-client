@@ -4,11 +4,11 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
@@ -25,3 +25,26 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+/* Personalizar la scrollbar en navegadores Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Personalizar el "pulgón" de la scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #6b46c1; /* Color púrpura */
+  border-radius: 6px;
+}
+
+/* Personalizar el fondo de la scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #d1d5db; /* Color gris */
+}
+
+/* Personalizar la scrollbar en navegadores Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6b46c1 #d1d5db;
+}
+
+/* Opcional: Ajusta otros estilos según tus preferencias */
