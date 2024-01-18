@@ -2,8 +2,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ListAuthor from "@/components/ListAuthor";
+import Pagination from "@/components/Pagination";
 
-const URL = "http://localhost:3000/author";
+const URL = "http://localhost:8080/author";
 
 const AuthorsPage = () => {
   const [authors, setAuthors] = useState([]);
@@ -46,10 +47,6 @@ const AuthorsPage = () => {
     fetchData();
   }, [currentPage, authorsPerPage]);
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
   const handleAuthorsPerPageChange = ({ target: { value } }) => {
     setAuthorsPerPage(value);
     setCurrentPage(1);
@@ -84,23 +81,7 @@ const AuthorsPage = () => {
       </div>
 
       <ListAuthor authors={authors} />
-      <div className="mt-4 flex items-center justify-center">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          (page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`mx-2 px-4 py-2 mb-4 ${
-                page === currentPage
-                  ? "bg-gray-600 text-white shadow-md"
-                  : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-              } transition-all duration-300 ease-in-out rounded-md`}
-            >
-              {page}
-            </button>
-          )
-        )}
-      </div>
+      <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

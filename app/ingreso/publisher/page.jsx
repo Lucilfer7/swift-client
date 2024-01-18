@@ -8,7 +8,7 @@ const PublisherForm = () => {
     country: "",
   });
 
-  const URL = "http://localhost:3000/publisher";
+  const URL = "http://localhost:8080/publisher";
 
   const handleChange = ({ target: { name, value } }) =>
     setPublisher({ ...publisher, [name]: value });

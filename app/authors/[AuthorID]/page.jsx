@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const AuthorDetailPage = ({ params: { AuthorID } }) => {
-  const URL = `http://localhost:3000/author/${AuthorID}`;
+  const URL = `http://localhost:8080/author/${AuthorID}`;
   const [author, setAuthor] = useState({});
   const [isLoading, setLoading] = useState(true);
 
@@ -33,7 +33,7 @@ const AuthorDetailPage = ({ params: { AuthorID } }) => {
       <div className="bg-white shadow-md rounded px-8 py-4">
         <div className="mb-4">
           <img
-            src={`http://localhost:3000/images/${author.ImagePath}`} // Reemplaza con la URL de la foto de perfil del autor
+            src={`http://localhost:8080/images/${author.ImagePath}`} // Reemplaza con la URL de la foto de perfil del autor
             alt={`${author.Name} ${author.LastName}`}
             className="w-48 h-48 rounded-full mx-auto object-cover" // Tamaño y estilo de la imagen
           />

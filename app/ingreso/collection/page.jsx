@@ -7,7 +7,7 @@ const CollectionPage = () => {
   const [name, setName] = useState("");
   const [publisherID, setPublisherID] = useState("");
   const [collection, setCollection] = useState({});
-  const URL = `http://localhost:3000//collection`;
+  const URL = `http://localhost:8080/collection`;
   const handleChange = ({ target: { name, value } }) =>
     setCollection({ ...collection, [name]: value });
 

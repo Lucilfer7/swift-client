@@ -8,7 +8,7 @@ const ListAuthor = ({ authors }) => {
           label={`${author.Name} ${author.LastName}`}
           alt={`${author.Name} ${author.LastName}`}
           href={`/authors/${author.AuthorID}`}
-          imageSource={`http://localhost:3000/images/${author.ImagePath}`}
+          imageSource={`http://localhost:8080/images/${author.ImagePath}`}
           key={author.AuthorID}
         />
       ))}

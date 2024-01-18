@@ -6,20 +6,21 @@ import { useRouter } from "next/navigation";
 
 const EditAuthor = ({ params }) => {
   const { AuthorID } = params; // Obtén el AuthorID de la URL
-  const URL = `http://localhost:3000/author/${AuthorID}`;
+  
+  const URL = `http://localhost:8080/author/${AuthorID}`;
   const router = useRouter();
+  const [author, setAuthor] = useState({
+    Name: "",
+    LastName: "",
+    Description: "",
+    ImagePath: "",
+  });
   const [file, setFile] = useState({
     name: "",
     size: 0,
     type: "",
     lastModified: 0,
     lastModifiedDate: {},
-  });
-  const [author, setAuthor] = useState({
-    Name: "",
-    LastName: "",
-    Description: "",
-    ImagePath: "",
   });
   const handleFileChange = ({ target: { files } }) => {
     setFile(files[0]);
@@ -38,33 +39,32 @@ const EditAuthor = ({ params }) => {
     }
   }, [AuthorID]);
 
-  const handleChange = ({ target: { name, value } }) =>
-    setAuthor({ ...author, [name]: value });
+  const handleChange = ({ target: { name, value } }) => setAuthor({ ...author, [name]: value })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("image", file);
     formData.append("AuthorID", AuthorID);
-    formData.append("Name", author.Name);
     formData.append("LastName", author.LastName);
     formData.append("Description", author.Description);
-
+    formData.append("Name", author.Name)
+    if (file.name !== "") {
+      formData.append("image", file);
+    } else {
+      formData.append("ImagePath", author.ImagePath);
+      console.log(author.ImagePath)
+    }
+    
     try {
       if (!author.LastName) {
         throw new Error("El apellido es obligatorio");
       }
-      const res = await axios.put(URL, formData);
 
+      const res = await axios.put(URL, formData);
+      
       setAuthor({ Name: "", LastName: "", Description: "", ImagePath: "" });
-      setFile({
-        name: "",
-        size: 0,
-        type: "",
-        lastModified: 0,
-        lastModifiedDate: {},
-      });
+      setFile({ name: "", size: 0, type: "", lastModified: 0, lastModifiedDate: {},});
       router.push(`/authors/${AuthorID}`);
     } catch (error) {
       console.error("Error al crear al autor:", error.message);
