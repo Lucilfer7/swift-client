@@ -1,8 +1,10 @@
-import { Inter } from "next/font/google";
+import { Roboto, Tangerine, Italianno } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ subsets: ["latin"], weight: "400" });
+export const italianno = Italianno({ subsets: ["latin"], weight: "400" });
+export const tangerine = Tangerine({subsets: ["latin"], weight: "700"});
 
 export const metadata = {
   title: "Swift",
@@ -16,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gray-100 h-screen overflow-auto scrollbar-thumb-purple-500 scrollbar-track-gray-300 scrollbar-thin`}
+        className={`${roboto.className} bg-gray-100 h-screen overflow-auto scrollbar-thumb-purple-500 scrollbar-track-gray-300 scrollbar-thin`}
       >
         <Navbar />
         <div className="px-5 pt-3">{children}</div>

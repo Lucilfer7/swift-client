@@ -4,7 +4,6 @@ import FileInput from "./FileInput";
 import Input from "./Input";
 import Submit from "./Submit";
 import Textarea from "./Textarea";
-import { useState } from "react";
 
 const FormAuthor = ({
   handleSubmit,

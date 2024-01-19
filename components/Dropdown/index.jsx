@@ -13,9 +13,7 @@ const Dropdown = () => {
     }
   };
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     // Agregar un event listener para cerrar el dropdown al hacer clic fuera de él
@@ -39,6 +37,7 @@ const Dropdown = () => {
       {isOpen && (
         <div
           ref={dropdownRef}
+          onClick={toggleDropdown}
           className="absolute right-0 mt-2 bg-white shadow-md z-10"
         >
           <ul className="py-2">

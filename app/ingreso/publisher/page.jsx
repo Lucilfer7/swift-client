@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import Form from "@/components/Form";
+import Input from "@/components/Form/Input";
+import Submit from "@/components/Form/Submit";
 
 const PublisherForm = () => {
   const [publisher, setPublisher] = useState({
@@ -30,49 +33,21 @@ const PublisherForm = () => {
   return (
     <div>
       <h2 className="ml-2 text-xl font-bold mb-4">Formulario de Editorial</h2>
-      <form
-        className="p-4 m-auto max-w-xl border rounded-md"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="name"
-          >
-            Nombre de la Editorial:
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={publisher.name}
-            onChange={handleChange}
-            className="mt-1 mb-4 p-2 w-full border rounded-md focus:ring focus:ring-purple-300 focus:outline-none"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="country"
-          >
-            País de la Editorial:
-          </label>
-          <input
-            type="text"
-            name="country"
-            id="country"
-            value={publisher.country}
-            onChange={handleChange}
-            className="mt-1 mb-4 p-2 w-full border rounded-md focus:ring focus:ring-purple-300 focus:outline-none"
-          />
-        </div>
-        <button
-          className="bg-purple-500 text-white w-full p-2 rounded-md hover:bg-purple-600"
-          type="submit"
-        >
-          Guardar
-        </button>
-      </form>
+      <Form handleSubmit={handleSubmit}>
+        <Input
+          name="name"
+          value={publisher.name}
+          handleChange={handleChange}
+          label="Nombre de la Editorial"
+        />
+        <Input
+          name="country"
+          value={publisher.country}
+          handleChange={handleChange}
+          label="País de la Editorial"
+        />
+        <Submit>Guardar</Submit>
+      </Form>
     </div>
   );
 };
