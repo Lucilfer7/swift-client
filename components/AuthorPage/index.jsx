@@ -1,58 +1,28 @@
-"use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import AuthorBooks from "./AuthorBooks";
+import AuthorName from "./AuthorName";
+import AuthorPic from "./AuthorPic";
+import Description from "./Description";
+import EditInfoButton from "./EditInfoButton";
 
-const AuthorPage = ({AuthorID}) => {
-    const URL = `http://localhost:8080/author/${AuthorID}`;
-    const [author, setAuthor] = useState({});
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchData() {
-            const { data } = await axios.get(URL);
-            setAuthor(data);
-            if (author) setLoading(false);
-        }
-        fetchData();
-    }, []);
-
-    if (isLoading) return <p>Loading...</p>;
-    if (!author) return <p>No author's data</p>;
-    const descriptionParagraphs = author.Description.split("\n").map(
-        (paragraph, index) => (
-            <p key={index} className="text-gray-700 mb-4">
-                {paragraph}
-            </p>
-        )
-    );
+const AuthorPage = ({ author, works }) => {
     return (
-        <div className="bg-white shadow-md rounded px-8 py-4">
-            <div className="mb-4">
-                <img
-                    src={`http://localhost:8080/images/authors/${author.ImagePath}`} // Reemplaza con la URL de la foto de perfil del autor
-                    alt={`${author.Name} ${author.LastName}`}
-                    className="w-48 h-48 rounded-full mx-auto object-cover" // Tamaño y estilo de la imagen
-                />
+        <div className="bg-white w-full">
+            <div className="w-full h-full flex flex-col pt-5 lg:flex-row md:flex-col sm:flex-col">
+                <div className="w-full lg:w-1/3 md:w-full sm:w-full">
+                    <AuthorPic author={author} />
+                </div>
+                <div className="w-full pr-12 lg:w-2/3 md:pl-4 md:w-full sm:w-full">
+                    <AuthorName name={author.Name} lastName={author.LastName} />
+                    <Description description={author.Description} />
+                    <EditInfoButton authorID={author.AuthorID} />
+                </div>
             </div>
-            <h1 className={`text-4xl mb-4 text-center font-extrabold`}>
-                {author.Name} {author.LastName}
-            </h1>
-            {descriptionParagraphs}
-            <Link
-                className="mt-6 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                href={`/authors/edit/${author.AuthorID}`}
-            >
-                Editar información
-            </Link>
-            <Link
-                className="text-blue-500 hover:underline mt-4 block"
-                href="/authors"
-            >
-                Volver a la lista de autores
-            </Link>
+            <div className="w-full pt-10 md:px-9">
+                <h2 className="text-3xl font-semibold italic">Books by {author.Name} {author.LastName}</h2>
+                <AuthorBooks author={author} works={works} />
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default AuthorPage
+export default AuthorPage;
