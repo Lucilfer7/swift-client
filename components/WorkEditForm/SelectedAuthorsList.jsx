@@ -1,4 +1,5 @@
 import RoleSelect from "./RoleSelect";
+import SelectedAuthor from "./SelectedAuthor";
 
 const SelectedAuthorsList = ({ selectedAuthors, authors, roles, selectedRolesMap, handleRoleChange, handleRemoveAuthorFromSelectionList }) => {
     return (
@@ -10,18 +11,7 @@ const SelectedAuthorsList = ({ selectedAuthors, authors, roles, selectedRolesMap
                         {selectedAuthors.map((authorId, index) => {
                             const selectedAuthor = authors.find((author) => author.AuthorID === authorId);
 
-                            return (
-                                <li className='flex flex-row' key={index}>
-                                    <label className='w-1/2'>{selectedAuthor.Name} {selectedAuthor.LastName}</label>
-                                    <RoleSelect
-                                        authorId={authorId}
-                                        roles={roles}
-                                        selectedRolesMap={selectedRolesMap[authorId]}
-                                        handleRoleChange={handleRoleChange}
-                                    />
-                                    <label onClick={() => handleRemoveAuthorFromSelectionList(index)}>Ⅹ</label>
-                                </li>
-                            );
+                            return <SelectedAuthor index={index} key={index} selectedAuthor={selectedAuthor} roles={roles} selectedRolesMap={selectedRolesMap} handleRoleChange={handleRoleChange} handleRemoveAuthorFromSelectionList={handleRemoveAuthorFromSelectionList} />
                         })}
                     </ul>
                 </>

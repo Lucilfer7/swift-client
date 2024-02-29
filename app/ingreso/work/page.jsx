@@ -11,6 +11,7 @@ const WorkForm = () => {
     const [work, setWork] = useState({
         Title: "",
         Subtitle: "",
+        OriginalTitle: "",
         PublishingYear: "",
         Description: ""
     });
@@ -42,6 +43,7 @@ const WorkForm = () => {
             formData.append("image", file);
             formData.append("Title", work.Title);
             formData.append("Subtitle", work.Subtitle);
+            formData.append("OriginalTitle", work.OriginalTitle);
             formData.append("PublishingYear", work.PublishingYear);
             formData.append("Description", work.Description);
             const res = await axios.post(URL, formData);
@@ -51,6 +53,7 @@ const WorkForm = () => {
             setWork({
                 Title: "",
                 Subtitle: "",
+                OriginalTitle: "",
                 PublishingYear: "",
                 Description: "",
             });
@@ -72,6 +75,7 @@ const WorkForm = () => {
             <Form handleSubmit={handleSubmit}>
                 <Input name="Title" label="Title" value={work.Title} handleChange={handleChange} />
                 <Input name="Subtitle" label="Subtitle" value={work.Subtitle} handleChange={handleChange} />
+                <Input name="OriginalTitle" label="Original Title" value={work.OriginalTitle} handleChange={handleChange} />
                 <Input name="PublishingYear" label="Publishing Year" value={work.PublishingYear} handleChange={handleChange} />
                 <Textarea name="Description" label="Description" value={work.Description} handleChange={handleChange} />
                 <CustomFileInput label="Work cover" onChange={handleFileChange} fileName={file.name} />

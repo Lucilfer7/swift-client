@@ -60,26 +60,38 @@ const EditWork = ({ params }) => {
     async function fetchWorkData() {
         const URL = `http://localhost:8080/works/full/${params.WorkID}`;
         try {
+
             const { data } = await axios.get(URL);
+            console.log(data)
+            const editedWork = {};
             if (data[0]) {
-                const editedWork = {
-                    WorkID: data[0].WorkID,
-                    WorkTitle: data[0].WorkTitle,
-                    WorkSubtitle: data[0].WorkSubtitle,
-                    WorkOriginalTitle: data[0].WorkOriginalTitle,
-                    WorkDescription: data[0].WorkDescription,
-                    WorkImagePath: data[0].WorkImagePath,
-                    WorkPublishingYear: data[0].WorkPublishingYear,
-                    Authors: data.map(author => ({
-                        AuthorID: author.AuthorID,
-                        AuthorName: author.AuthorName,
-                        AuthorLastName: author.AuthorLastName,
-                        RoleID: author.RoleID,
-                        RoleName: author.RoleName
-                    }))
-                };
-                setWork(editedWork)
+                editedWork.WorkID = data[0].WorkID;
+                editedWork.WorkTitle = data[0].WorkTitle;
+                editedWork.WorkSubtitle = data[0].WorkSubtitle;
+                editedWork.WorkOriginalTitle = data[0].WorkOriginalTitle;
+                editedWork.WorkDescription = data[0].WorkDescription;
+                editedWork.WorkImagePath = data[0].WorkImagePath;
+                editedWork.WorkPublishingYear = data[0].WorkPublishingYear;
+                editedWork.Authors = data.map(author => ({
+                    AuthorID: author.AuthorID,
+                    AuthorName: author.AuthorName,
+                    AuthorLastName: author.AuthorLastName,
+                    RoleID: author.RoleID,
+                    RoleName: author.RoleName
+                }));
+            } else {
+                editedWork.WorkID = data.WorkID;
+                editedWork.WorkTitle = data.Title;
+                editedWork.WorkSubtitle = data.Subtitle;
+                editedWork.WorkOriginalTitle = data.OriginalTitle;
+                editedWork.WorkDescription = data.Description;
+                editedWork.WorkImagePath = data.ImagePath;
+                editedWork.WorkPublishingYear = data.PublishingYear;
+                editedWork.Authors = []
             }
+            setWork(editedWork);
+            setSelectedAuthors(editedWork.Authors.map(author => author.AuthorID))
+            setSelectedRoles(editedWork.Authors.map(author => author.RoleID))
         } catch (error) {
             console.error("Error fetching work data:", error);
             return null;
@@ -96,7 +108,8 @@ const EditWork = ({ params }) => {
 
         try {
             console.log("Work actualizado:", work);
-
+            console.log(selectedRoles)
+            console.log(selectedAuthors)
             // Aquí puedes realizar la lógica para enviar la información actualizada a la API
             // ...
 
@@ -119,18 +132,15 @@ const EditWork = ({ params }) => {
     };
 
     return (
-        <div className='w-full min-h-screen container mx-auto flex flex-col justify-center items-center'>
+        <div className='w-full min-h-screen container mx-auto flex flex-col items-center mt-3'>
             <h1 className='text-3xl'>Edit Work</h1>
-            <Form handleSubmit={handleFormSubmit}>
-                <EditWorkForm work={work} handleInputChange={handleInputChange} handleFileChange={handleFileChange} file={file} />
-                <LinkAuthorsToWorkForm
-                    authorCountMap={authorCountMap}
-                    setAuthorCountMap={setAuthorCountMap}
-                    selectedAuthors={selectedAuthors}
-                    setSelectedAuthors={setSelectedAuthors}
-                />
-                <Submit>Save</Submit>
-            </Form>
+            <div className='md:w-1/2'>
+                <Form handleSubmit={handleFormSubmit}>
+                    <EditWorkForm work={work} handleInputChange={handleInputChange} handleFileChange={handleFileChange} file={file} />
+                    <Submit>Save</Submit>
+                </Form>
+            </div>
+
         </div>
     );
 };
